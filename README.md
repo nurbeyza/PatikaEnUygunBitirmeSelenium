@@ -130,3 +130,6 @@ Raporlama için allure report kullanılmıştır. Test çalıştıktan sonra oto
 > #Not2: 
 Dışarıdan parametrik olarak alınan "provider" verisini stabil etmek oldukça zordu. Verilen test case üzerinde havayolu ismi ile aynı iken projede çok farklı veriler ile karşılaştım. Kontrol edilirken boşluk ve - işaretlerine uygun şekilde verinşn verilmesi oldukça önemlidir.
 
+## Anlaşılır adımlar ile raporlanan allure report görüntülerinin örneği aşağıdadır.
+<img src="https://github.com/nurbeyza/PatikaEnUygunBitirmeSelenium/blob/main/allure-report.JPG" width="auto">
+<img src="https://github.com/nurbeyza/PatikaEnUygunBitirmeSelenium/blob/main/allure-report2.JPG" width="auto">

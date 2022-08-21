@@ -1,6 +1,7 @@
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
+import io.qameta.allure.Story;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.experimental.theories.Theories;
 import org.openqa.selenium.By;
@@ -10,6 +11,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.openqa.selenium.WebDriver;
 import java.util.List;
+import org.junit.jupiter.api.DisplayName;
 
 
 /** @noinspection Lombok*/
@@ -38,8 +40,7 @@ public class TestRun {
     }
 
     //Testleri bu adımda koşuyoruz, method sınıdından uygun fonksiyonları çağırıyoruz
-    @Test(priority = 0)
-    @Step("ilgili sayfa açılıyor")
+    @Test(priority = 0, description = "Parametrik alınan -origin- verisi ilgili inputa eklendi")
     public void  departureAdd() throws Exception {
         log.info("Deperture day parametresi alındı.");
         method.depertureDayAdd(driverChrome);
@@ -49,8 +50,7 @@ public class TestRun {
     }
 
 
-    @Test(priority = 1)
-    @Description("nasıl yani")
+    @Test(priority = 1, description = "Deperture Day için listeden ilk eleman seçildi")
     public void departureSelectInput()throws Exception {
         log.info("Deperture Day için listeden ilk eleman seçildi.");
         WebElement element=driverChrome.findElement(By.id("react-autowhatever-OriginInput-section-0-item-0"));
@@ -59,7 +59,7 @@ public class TestRun {
     }
 
 
-    @Test(priority = 2)
+    @Test(priority = 2, description = "Parametrik alınan -destination- verisi ilgili inputa eklendi")
     public void  returnDayAdd() throws Exception {
         log.info("Return day parametresi alındı.");
         method.returnDayAdd(driverChrome);
@@ -69,7 +69,7 @@ public class TestRun {
 
     }
 
-    @Test(priority = 3)
+    @Test(priority = 3, description = "Return day için listenin ilk elemanı seçildi")
     public void returnSelectInput(){
         log.info("return day için listenin ilk elemanı seçildi.");
         WebElement element=driverChrome.findElement(By.id("react-autowhatever-DestinationInput-section-0-item-0"));
@@ -77,7 +77,7 @@ public class TestRun {
         element.click();
     }
 
-    @Test(priority = 4)
+    @Test(priority = 4, description = "Parametrik olarak -depertureDay- verisi kullanılarak datepicker üzerinde seçim yapıldı")
     public void  departureDayClick() throws InterruptedException {
 
         log.info("Datepicker üzerinden bugünün tarihinin seçilmesi.");
@@ -88,7 +88,6 @@ public class TestRun {
         String[] datalist=method.getDate(driverChrome,day);
 
         String month=method.getMonth(datalist[1]);
-        System.out.println(datalist[1]+month);
 
         List<WebElement> elements = driverChrome.findElements(By.xpath("//td[@class=\"CalendarDay CalendarDay_1 CalendarDay__default CalendarDay__default_2\"]"));
         List<WebElement> elements2 = driverChrome.findElements(By.xpath("//td[@class=\"CalendarDay CalendarDay_1 CalendarDay__default CalendarDay__default_2 CalendarDay__firstDayOfWeek CalendarDay__firstDayOfWeek_3\"]"));
@@ -116,7 +115,7 @@ public class TestRun {
     }
 
 
-    @Test(priority = 5)
+    @Test(priority = 5 ,description = "Parametrik olarak -returnDay- verisi kullanılarak datepicker üzerinde seçim yapıldı")
     public void returnDayClick() throws InterruptedException {
 
         log.info("Datepicker üzeirnden dönüş günün seçilmesi.");
@@ -139,11 +138,11 @@ public class TestRun {
         //Hafta içi günler için
         method.getDay(elements, datalist[0],month);
 
-        Thread.sleep(1000);
+
         //Haftanın ilk günlerini kontrol
         method.getDay(elements2,datalist[0],month);
 
-        Thread.sleep(1000);
+
         //Haftanın son gününü kontrol
         method.getDay(elements3,datalist[0],month);
 
@@ -154,7 +153,7 @@ public class TestRun {
 
     }
 
-    @Test(priority = 6)
+    @Test(priority = 6 ,description = "Ucuz bilet bul butonuna tıklandı")
     public void flightSearchButtonClick() throws InterruptedException {
         WebElement searchButton=driverChrome.findElement(By.xpath("//button[@class=\"primary-btn block\"]"));
         Assert.assertNotNull(searchButton);
@@ -165,7 +164,7 @@ public class TestRun {
 
 
 
-    @Test(priority = 7)
+    @Test(priority = 7, description = "Parametrik olarak alınan -isDireckt- verisine göre filtreleme yapıldı")
     public void clickTransferTypeFlight() throws InterruptedException {
         String type=null;
         log.info("Uygun transfer tipinin seçilmesi.");
@@ -192,7 +191,7 @@ public class TestRun {
 
     }
 
-    @Test(priority = 8)
+    @Test(priority = 8, description = "Parametrik olarak alınan -provider- bilgisine göre deperture uçuşu seçildi")
     public void clickDepertureFlight() throws InterruptedException {
 
         log.info("Uygun deperture uçuşunun seçilmesi");
@@ -205,7 +204,7 @@ public class TestRun {
         method.wait(driverChrome);
     }
 
-    @Test(priority = 9)
+    @Test(priority = 9,description = "Seçilen deperture uçuşuyla aynı pakette bulunan return uçuşu seçildi")
     public void clickReturnFlights() throws InterruptedException {
 
         WebElement returnfligt =driverChrome.findElement(By.xpath("//*[@id=\"SearchRoot\"]/div/div[2]/div[2]/div/div[2]/div/div[2]/div[1]/div[1]/div/div/div[1]/div[2]/label/div[2]"));
@@ -219,11 +218,11 @@ public class TestRun {
 
     }
 
-    @Test(priority = 10)
+    @Test(priority = 10, description ="Seç butonuna tıklandı")
     public void clickChooseButton() throws InterruptedException {
 
-        log.info("Uygun return day uçuşunun seçilmesi.");
         method.wait(driverChrome);
+        //projede bazı noktalarda doğru olmadığı bilincinde olsamda "Thread.sleep" kullandım. Bunun sebebi diğer ait fonksiyonlarından istediğim verimi alamadım.
         Thread.sleep(1000);
         WebElement searchbutton=driverChrome.findElement(By.id("tooltipTarget_0"));
         searchbutton.click();
@@ -234,7 +233,7 @@ public class TestRun {
     }
 
     //Son olarak açtığımız sayfamızı driver.quit diyerek kapatıyoruz
-   @Test(priority = 11)
+   @Test(priority = 11, description = "Browser kapatıldı")
     public void Down() throws Exception{
         log.info("Browser kapatılması.");
         driverChrome.quit();

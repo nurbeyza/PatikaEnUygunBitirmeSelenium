@@ -50,7 +50,7 @@ public class Method extends Connection {
     }
 
 
-    //Origin inputundan alınan ay verisini uygun formata çeviriyor.
+    //Date inputlarından alınan ay verisini uygun formata çeviriyor.
     public String getMonth(String mont) {
         String month = null;
         switch (Integer.parseInt(mont)) {
@@ -109,7 +109,7 @@ public class Method extends Connection {
                     elements.get(i).click();
                 }
             } catch (StaleElementReferenceException e) {
-
+                System.out.println(e);
 
             }
         }
