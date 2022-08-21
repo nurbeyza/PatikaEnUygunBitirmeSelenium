@@ -1,7 +1,11 @@
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Properties;
 
+
+/**
+ * Bu sınıf Utils sınıfından miras almıştır.
+ * properties dosyası içerisinde bulunan testimiz için dışarıdan aldığımız parametreleri kullanmak için get fonksiyonlarımız bu sınıf içerisindedir.
+ */
 
 //Bu sınıf tüm gerekli path'leri verdiğimiz ChromeDriver'a bağlantı sağladığımız fonksiyonu barındıran sınıf
 public class Connection extends Utils{
@@ -19,7 +23,7 @@ public class Connection extends Utils{
         return url;
     }
     public String path(){
-        Path resourceDirectory = Paths.get("src","test","resources");
+        Path resourceDirectory = Paths.get("src","test","resources","resources","binary");
         String absolutePath = resourceDirectory.toFile().getAbsolutePath();
         return absolutePath;
     }

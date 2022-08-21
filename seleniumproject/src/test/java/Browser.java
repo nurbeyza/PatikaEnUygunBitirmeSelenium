@@ -2,12 +2,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.util.Properties;
-
-
 /**
  * *Bu sınıf Connection sınıfından miras almıştır.
  * *Connection sınıfında bulunan url ve path fonksiyonlarını rahatlıkla kullanabilir.
+ * Browser olarak Chrome ve Firefox seçilebilir.
  */
 
 public class Browser extends Connection{
@@ -17,14 +15,14 @@ public class Browser extends Connection{
     //Fonksiyon driver döndürüyor
     public WebDriver OpenBrowser(String Browser, String url, String path) {
         if(Browser.equals("Chrome")){
-            System.setProperty("webdriver.chrome.driver", path+ "/binary/chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver", path+ "/chromedriver.exe");
             driver = new ChromeDriver();
             driver.get(url);
             driver.manage().window().maximize();
             return driver;
         }
         else if (Browser.equals("Firefox")) {
-            System.setProperty("webdriver.gecko.driver", path+ "/binary/geckodriver.exe");
+            System.setProperty("webdriver.gecko.driver", path+ "/geckodriver.exe");
             driver = new FirefoxDriver();
             driver.manage().window().maximize();
             driver.get(url);

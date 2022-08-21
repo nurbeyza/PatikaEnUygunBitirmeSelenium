@@ -3,16 +3,10 @@ import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.openqa.selenium.WebDriver;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 
@@ -29,7 +23,6 @@ public class TestRun {
 
     //Teste başlamadan önceki adımı burada yapıyoruz, Browserları burada açıyoruz ve düzgün yükelnemsi için 15 saniye bekletiyoruz
     @BeforeClass
-
     public void Browser() throws Exception {
         driverChrome = browser.OpenBrowser("Chrome", browser.url(), browser.path());
         //Firefox için çalışmasını istersek aşağıda bulunan satırı açabiliriz.
@@ -137,7 +130,7 @@ public class TestRun {
     }
 
     @Test(priority = 8)
-    public void clickProvider() throws InterruptedException {
+    public void clickDepertureFlight() throws InterruptedException {
 
         String provider= connection.getProvider();
         method.chooseProvider(driverChrome, provider);
@@ -147,7 +140,7 @@ public class TestRun {
     }
 
     @Test(priority = 9)
-    public void clickDepartureFlights() throws InterruptedException {
+    public void clickReturnFlights() throws InterruptedException {
 
         driverChrome.findElement(By.xpath("//*[@id=\"SearchRoot\"]/div/div[2]/div[2]/div/div[2]/div/div[2]/div[1]/div[1]/div/div/div[1]/div[2]/label[1]/div[1]/div/span")).click();
         method.wait(driverChrome);

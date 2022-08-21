@@ -1,6 +1,9 @@
 import java.io.*;
 import java.util.Properties;
 
+/**
+ * Properties dosyamızı bu sınıd üzerinden okuyoruz.
+ */
 public class Utils {
 
     public Properties properties;
