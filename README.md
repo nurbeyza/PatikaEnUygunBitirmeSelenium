@@ -80,7 +80,7 @@ Bu sınıf içeirisinde testlerimizde kullandığımız tüm methodlar bulunmakt
 Tüm test adımlarıı bu sınıf içeirisinde yazıldı. Toplamda BeforeClass dahil bir şekilde 13 tane testimiz bulunuyor. Detaylı açıklamalar proje içerisinde verildi.
 
 💬<details>
-<summary><h4>örnek olarak bir testi görüntülemek için tıklayın</h4></summary>
+<summary><h4>Örnek olarak bir testi görüntülemek için tıklayın</h4></summary>
 
 ```java
 @Test(priority = 7)
@@ -121,6 +121,8 @@ Bu package altında kullandığımız browsera ait exe dosyaları bulunmaktadır
 
 ## Properties
 Bu package içerisinde parametrik olarak aldığımız verilerin olduğu dosya bulunmaktadır.
+
+##Ek bilgiler
 
 > #Not1: 
 Raporlama için allure report kullanılmıştır. Test çalıştıktan sonra otomatik olarak "Seleniumproject" altında <b>Allure-results</b> dosyası oluşacaktır. Terminalden projesenin bulunduğu dizinde <b>Allure serve allure-results</b> yazarak test raporlarına ulaşılabilir.
