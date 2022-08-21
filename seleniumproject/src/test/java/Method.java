@@ -45,6 +45,7 @@ public class Method extends Connection {
         calendar.setTime(new Date());
         calendar.add(Calendar.DATE, day);
         String date = data_format.format(calendar.getTime());
+        System.out.println(date+"--");
         String[] datalist = date.split("/");
         return datalist;
     }

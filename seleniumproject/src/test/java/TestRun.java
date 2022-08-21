@@ -1,6 +1,8 @@
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.experimental.theories.Theories;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -10,6 +12,7 @@ import org.openqa.selenium.WebDriver;
 import java.util.List;
 
 
+/** @noinspection Lombok*/
 @Slf4j
 public class TestRun {
 
@@ -41,6 +44,8 @@ public class TestRun {
         log.info("Deperture day parametresi alındı.");
         method.depertureDayAdd(driverChrome);
 
+        Assert.assertNotNull(driverChrome.findElement(By.id("OriginInput")));
+
     }
 
 
@@ -48,7 +53,9 @@ public class TestRun {
     @Description("nasıl yani")
     public void departureSelectInput()throws Exception {
         log.info("Deperture Day için listeden ilk eleman seçildi.");
-        driverChrome.findElement(By.id("react-autowhatever-OriginInput-section-0-item-0")).click();
+        WebElement element=driverChrome.findElement(By.id("react-autowhatever-OriginInput-section-0-item-0"));
+        Assert.assertNotNull(element);
+        element.click();
     }
 
 
@@ -58,12 +65,16 @@ public class TestRun {
         method.returnDayAdd(driverChrome);
         method.wait(driverChrome);
 
+        Assert.assertNotNull(driverChrome.findElement(By.id("react-autowhatever-DestinationInput-section-0-item-0")));
+
     }
 
     @Test(priority = 3)
     public void returnSelectInput(){
         log.info("return day için listenin ilk elemanı seçildi.");
-        driverChrome.findElement(By.id("react-autowhatever-DestinationInput-section-0-item-0")).click();
+        WebElement element=driverChrome.findElement(By.id("react-autowhatever-DestinationInput-section-0-item-0"));
+        Assert.assertNotNull(element);
+        element.click();
     }
 
     @Test(priority = 4)
@@ -72,11 +83,21 @@ public class TestRun {
         log.info("Datepicker üzerinden bugünün tarihinin seçilmesi.");
         WebElement input=driverChrome.findElement(By.id("DepartureDate"));
         input.click();
-        String[] datalist=method.getDate(driverChrome,Integer.parseInt(connection.getdepartureDay()));
+        int day=Integer.parseInt(connection.getdepartureDay());
+
+        String[] datalist=method.getDate(driverChrome,day);
+
         String month=method.getMonth(datalist[1]);
+        System.out.println(datalist[1]+month);
+
         List<WebElement> elements = driverChrome.findElements(By.xpath("//td[@class=\"CalendarDay CalendarDay_1 CalendarDay__default CalendarDay__default_2\"]"));
         List<WebElement> elements2 = driverChrome.findElements(By.xpath("//td[@class=\"CalendarDay CalendarDay_1 CalendarDay__default CalendarDay__default_2 CalendarDay__firstDayOfWeek CalendarDay__firstDayOfWeek_3\"]"));
         List<WebElement> elements3 = driverChrome.findElements(By.xpath("//td[@class=\"CalendarDay CalendarDay_1 CalendarDay__default CalendarDay__default_2 CalendarDay__lastDayOfWeek CalendarDay__lastDayOfWeek_3\"]\n"));
+
+        //Listelerin doluluğunu kontrol ediyoruz.
+        Assert.assertNotNull(elements);
+        Assert.assertNotNull(elements2);
+        Assert.assertNotNull(elements3);
 
         //Hafta içi günler için
         method.getDay(elements, datalist[0],month);
@@ -88,6 +109,10 @@ public class TestRun {
         method.getDay(elements3,datalist[0],month);
 
 
+        WebElement depertureElement=driverChrome.findElement(By.xpath("//*[@id=\"DepartureDate\"]"));
+        String [] deperture=depertureElement.getAttribute("value").split(",");
+        String [] depertureDay=deperture[0].split(" ");
+        Assert.assertEquals(datalist[0],depertureDay[0]);
     }
 
 
@@ -100,27 +125,40 @@ public class TestRun {
         int day= Integer.parseInt(connection.getdepartureDay())+Integer.parseInt(connection.getReturnDay());
         String[] datalist=method.getDate(driverChrome,day);
 
-        WebElement returndate=driverChrome.findElement(By.xpath("//input[@class=\"DateInput_input DateInput_input_1 DateInput_input__readOnly DateInput_input__readOnly_2\"]"));
-        String date[]=returndate.getAttribute("value").split(",");
+
         String month=method.getMonth(datalist[1]);
         List<WebElement> elements = driverChrome.findElements(By.xpath("//td[@class=\"CalendarDay CalendarDay_1 CalendarDay__default CalendarDay__default_2\"]"));
         List<WebElement> elements2 = driverChrome.findElements(By.xpath("//td[@class=\"CalendarDay CalendarDay_1 CalendarDay__default CalendarDay__default_2 CalendarDay__firstDayOfWeek CalendarDay__firstDayOfWeek_3\"]"));
         List<WebElement> elements3 = driverChrome.findElements(By.xpath("//td[@class=\"CalendarDay CalendarDay_1 CalendarDay__default CalendarDay__default_2 CalendarDay__lastDayOfWeek CalendarDay__lastDayOfWeek_3\"]\n"));
 
+        //Listelerin doluluğunu kontrol ediyoruz.
+        Assert.assertNotNull(elements);
+        Assert.assertNotNull(elements2);
+        Assert.assertNotNull(elements3);
+
         //Hafta içi günler için
         method.getDay(elements, datalist[0],month);
 
+        Thread.sleep(1000);
         //Haftanın ilk günlerini kontrol
         method.getDay(elements2,datalist[0],month);
 
+        Thread.sleep(1000);
         //Haftanın son gününü kontrol
         method.getDay(elements3,datalist[0],month);
+
+        WebElement returndate=driverChrome.findElement(By.xpath("//*[@id=\"ReturnDate\"]"));
+        String [] returndatelist=returndate.getAttribute("value").split(",");
+        String [] returndaylist=returndatelist[0].split(" ");
+        Assert.assertEquals(datalist[0],returndaylist[0]);
 
     }
 
     @Test(priority = 6)
     public void flightSearchButtonClick() throws InterruptedException {
-        driverChrome.findElement(By.xpath("//button[@class=\"primary-btn block\"]")).click();
+        WebElement searchButton=driverChrome.findElement(By.xpath("//button[@class=\"primary-btn block\"]"));
+        Assert.assertNotNull(searchButton);
+        searchButton.click();
         method.waitelement(driverChrome,"//div[@class=\"flight-list-header combine roundTripHeader desktopHeader false\"]");
     }
 
@@ -129,7 +167,7 @@ public class TestRun {
 
     @Test(priority = 7)
     public void clickTransferTypeFlight() throws InterruptedException {
-
+        String type=null;
         log.info("Uygun transfer tipinin seçilmesi.");
         Assert.assertNotNull( driverChrome.findElement(By.xpath("//div[@class=\"flight-list-header combine roundTripHeader desktopHeader false\"]")));
         Boolean isDirect=connection.getIsDirect();
@@ -137,6 +175,20 @@ public class TestRun {
         WebElement isDirectElement=driverChrome.findElement(By.xpath("//*[@id=\"SearchRoot\"]/div/div[2]/div[1]/div[4]/div/div[2]/div[2]/div/label[1]/button"));
         WebElement notDirectElement=driverChrome.findElement(By.xpath("//*[@id=\"SearchRoot\"]/div/div[2]/div[1]/div[4]/div/div[2]/div[2]/div/label[1]"));
         method.transferTypeControl(isDirect,hoverElement,isDirectElement,driverChrome, notDirectElement);
+
+
+        //Uçuş kartı üzerinden doğru filtreleme yapıldı mı? Kontrolü bu assert üzerinden yapılıyor.
+        WebElement transfertype=driverChrome.findElement(By.xpath("//*[@id=\"SearchRoot\"]/div/div[2]/div[2]/div/div[2]/div/div[2]/div[1]/div[1]/div/div/div[1]/div[1]/label[1]/div[2]/div[2]/div/div[3]/div[3]"));
+        if(isDirect.equals(Boolean.FALSE)){
+             type="Aktarma";
+             String [] Type=transfertype.getText().split(" ");
+            Assert.assertEquals(Type[0], type);
+        }
+        else{
+            type="Direkt Uçuş";
+            Assert.assertEquals(transfertype.getText(),type);
+        }
+
 
     }
 
@@ -147,6 +199,8 @@ public class TestRun {
         String provider= connection.getProvider();
         method.chooseProvider(driverChrome, provider);
         method.wait(driverChrome);
+
+        //Uygun uçuş bulunduktan sonra sayfanın başına scroll yapılıyor.
         method.upScroll(driverChrome);
         method.wait(driverChrome);
     }
@@ -154,7 +208,13 @@ public class TestRun {
     @Test(priority = 9)
     public void clickReturnFlights() throws InterruptedException {
 
-        driverChrome.findElement(By.xpath("//*[@id=\"SearchRoot\"]/div/div[2]/div[2]/div/div[2]/div/div[2]/div[1]/div[1]/div/div/div[1]/div[2]/label[1]/div[1]/div/span")).click();
+        WebElement returnfligt =driverChrome.findElement(By.xpath("//*[@id=\"SearchRoot\"]/div/div[2]/div[2]/div/div[2]/div/div[2]/div[1]/div[1]/div/div/div[1]/div[2]/label/div[2]"));
+        returnfligt.click();
+        Thread.sleep(1000);
+        WebElement returnFlightActive=driverChrome.findElement(By.xpath("//*[@id=\"SearchRoot\"]/div/div[2]/div[2]/div/div[2]/div/div[2]/div[1]/div[1]/div/div/div[1]/div[2]/label/div[2]"));
+
+        //Uçuş seçildiğinde sınıf isminin yanına "active" ekleniyor bu sayede kontrolü sağlanıyor.
+        Assert.assertEquals(returnFlightActive.getAttribute("class"),"flight-item round-trip tr  active");
         method.wait(driverChrome);
 
     }
@@ -178,6 +238,8 @@ public class TestRun {
     public void Down() throws Exception{
         log.info("Browser kapatılması.");
         driverChrome.quit();
+
+        //Firefox seçmek istersek üstte ki Chrome adımını kapatıp alttaki adım açılır.
         //driverFirefox.quit();
     }
 
