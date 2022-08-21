@@ -1,1 +1,1 @@
-# PatikaEnUygunBitirme
+# PatikaEnUygunBitirmedeneme
