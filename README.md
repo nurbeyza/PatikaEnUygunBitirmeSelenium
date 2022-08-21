@@ -128,7 +128,7 @@ Bu package içerisinde parametrik olarak aldığımız verilerin olduğu dosya b
 Raporlama için allure report kullanılmıştır. Test çalıştıktan sonra otomatik olarak "Seleniumproject" altında <b>Allure-results</b> dosyası oluşacaktır. Terminalden projesenin bulunduğu dizinde <b>Allure serve allure-results</b> yazarak test raporlarına ulaşılabilir.
 
 > # Not2: 
-Dışarıdan parametrik olarak alınan "provider" verisini stabil etmek oldukça zordu. Verilen test case üzerinde havayolu ismi ile aynı iken projede çok farklı veriler ile karşılaştım. Kontrol edilirken boşluk ve - işaretlerine uygun şekilde verinşn verilmesi oldukça önemlidir.
+Dışarıdan parametrik olarak alınan "provider" verisini stabil etmek oldukça zordu. Verilen test case üzerinde havayolu ismi ile aynı iken projede çok farklı veriler ile karşılaştım. Kontrol edilirken boşluk ve - işaretlerine uygun şekilde verinin verilmesi oldukça önemlidir.
 
 ## Anlaşılır adımlar ile raporlanan allure report görüntülerinin örneği aşağıdadır.
 <img src="https://github.com/nurbeyza/PatikaEnUygunBitirmeSelenium/blob/main/allure-report.JPG" width="auto">
