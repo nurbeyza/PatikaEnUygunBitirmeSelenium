@@ -19,7 +19,7 @@ public class Connection extends Utils{
     public String url() {
 
         //ChromeDriver.exe yolu ve gerekli url veriliyor
-        String url = "https://www.enuygun.com/";
+        String url = "https://www.enuygun.com/ucak-bileti/";
         return url;
     }
     public String path(){

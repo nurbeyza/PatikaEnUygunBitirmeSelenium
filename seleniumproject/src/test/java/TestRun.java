@@ -22,11 +22,15 @@ public class TestRun {
 
 
     //Teste başlamadan önceki adımı burada yapıyoruz, Browserları burada açıyoruz ve düzgün yükelnemsi için 15 saniye bekletiyoruz
+
     @BeforeClass
     public void Browser() throws Exception {
+        log.info("Browser bağlantıları sağlandı.");
         driverChrome = browser.OpenBrowser("Chrome", browser.url(), browser.path());
         //Firefox için çalışmasını istersek aşağıda bulunan satırı açabiliriz.
         // driverFirefox = browser.OpenBrowser("Firefox", browser.url(), browser.path());
+
+        Assert.assertNotNull(driverChrome.findElement(By.id("jumbotron-tab")));
 
     }
 
@@ -34,7 +38,7 @@ public class TestRun {
     @Test(priority = 0)
     @Step("ilgili sayfa açılıyor")
     public void  departureAdd() throws Exception {
-        log.info("beyza bak bi");
+        log.info("Deperture day parametresi alındı.");
         method.depertureDayAdd(driverChrome);
 
     }
@@ -43,12 +47,14 @@ public class TestRun {
     @Test(priority = 1)
     @Description("nasıl yani")
     public void departureSelectInput()throws Exception {
-       driverChrome.findElement(By.id("react-autowhatever-OriginInput-section-0-item-0")).click();
+        log.info("Deperture Day için listeden ilk eleman seçildi.");
+        driverChrome.findElement(By.id("react-autowhatever-OriginInput-section-0-item-0")).click();
     }
 
 
     @Test(priority = 2)
     public void  returnDayAdd() throws Exception {
+        log.info("Return day parametresi alındı.");
         method.returnDayAdd(driverChrome);
         method.wait(driverChrome);
 
@@ -56,12 +62,14 @@ public class TestRun {
 
     @Test(priority = 3)
     public void returnSelectInput(){
+        log.info("return day için listenin ilk elemanı seçildi.");
         driverChrome.findElement(By.id("react-autowhatever-DestinationInput-section-0-item-0")).click();
     }
 
     @Test(priority = 4)
     public void  departureDayClick() throws InterruptedException {
 
+        log.info("Datepicker üzerinden bugünün tarihinin seçilmesi.");
         WebElement input=driverChrome.findElement(By.id("DepartureDate"));
         input.click();
         String[] datalist=method.getDate(driverChrome,Integer.parseInt(connection.getdepartureDay()));
@@ -85,6 +93,8 @@ public class TestRun {
 
     @Test(priority = 5)
     public void returnDayClick() throws InterruptedException {
+
+        log.info("Datepicker üzeirnden dönüş günün seçilmesi.");
         WebElement input=driverChrome.findElement(By.id("ReturnDate"));
         input.click();
         int day= Integer.parseInt(connection.getdepartureDay())+Integer.parseInt(connection.getReturnDay());
@@ -118,8 +128,9 @@ public class TestRun {
 
 
     @Test(priority = 7)
-    public void clickDepartureFlight() throws InterruptedException {
+    public void clickTransferTypeFlight() throws InterruptedException {
 
+        log.info("Uygun transfer tipinin seçilmesi.");
         Assert.assertNotNull( driverChrome.findElement(By.xpath("//div[@class=\"flight-list-header combine roundTripHeader desktopHeader false\"]")));
         Boolean isDirect=connection.getIsDirect();
         WebElement hoverElement= driverChrome.findElement(By.xpath("//*[@id=\"SearchRoot\"]/div/div[2]/div[1]/div[4]/div/div[2]/div[2]/div/label[1]/span[2]"));
@@ -132,6 +143,7 @@ public class TestRun {
     @Test(priority = 8)
     public void clickDepertureFlight() throws InterruptedException {
 
+        log.info("Uygun deperture uçuşunun seçilmesi");
         String provider= connection.getProvider();
         method.chooseProvider(driverChrome, provider);
         method.wait(driverChrome);
@@ -149,6 +161,8 @@ public class TestRun {
 
     @Test(priority = 10)
     public void clickChooseButton() throws InterruptedException {
+
+        log.info("Uygun return day uçuşunun seçilmesi.");
         method.wait(driverChrome);
         Thread.sleep(1000);
         WebElement searchbutton=driverChrome.findElement(By.id("tooltipTarget_0"));
@@ -162,6 +176,7 @@ public class TestRun {
     //Son olarak açtığımız sayfamızı driver.quit diyerek kapatıyoruz
    @Test(priority = 11)
     public void Down() throws Exception{
+        log.info("Browser kapatılması.");
         driverChrome.quit();
         //driverFirefox.quit();
     }
